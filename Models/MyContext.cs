@@ -14,6 +14,7 @@ namespace Cookbook.Models
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Favorite> Favorites {get;set;}
 
     }
 }

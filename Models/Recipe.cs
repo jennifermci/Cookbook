@@ -18,6 +18,11 @@ namespace Cookbook.Models
 
         public string RecipeImage { get; set; }
 
+        public int CreatorId {get;set;}
+        public RegisterUser Creator {get;set;}
+
+        public List<Favorite> UserFavorites {get;set;}
+
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 

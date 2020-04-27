@@ -1,0 +1,32 @@
+@model Cookbook.Models.AddWrapper;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Recipe</title>
+</head>
+<body>
+    <a href = "logout">Logout</a>
+    <br/>
+    <br/>
+    <h1>@Model.RegisterUser.FirstName, Add a New Recipe:</h1>
+    <form asp-controller="Home" asp-action="CreateRecipe" method="POST">
+        <input type="hidden" asp-for="@Model.Recipe.CreatorId" value="@Model.RegisterUser.UserId"/>
+        <span asp-validation-for="@Model.Recipe.RecipeName"></span>
+        <label asp-for="@Model.Recipe.RecipeName"></label>
+        <input asp-for="@Model.Recipe.RecipeName"/>
+        <br>
+        <span asp-validation-for="@Model.Recipe.RecipeImage"></span>
+        <label asp-for="@Model.Recipe.RecipeImage"></label>
+        <input asp-for="@Model.Recipe.RecipeImage"/>
+        <br>
+        <span asp-validation-for="@Model.Recipe.RecipeDuration"></span>
+        <label> How Long does your recipe take to make?</label>
+        <input asp-for="@Model.Recipe.RecipeDuration"/>
+        <br>
+        <input type="submit" value="Add a New Recipe"/>
+    </form>
+
+</body>
+</html>

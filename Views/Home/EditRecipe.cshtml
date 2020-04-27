@@ -1,0 +1,74 @@
+@model Cookbook.Models.EditWrapper;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Your Recipe:</title>
+</head>
+<body>
+    <a href = "logout">Logout</a>
+    <br/>
+    <br/>
+    <h1>@Model.RegisterUser.FirstName, Edit Your Recipe:</h1>
+    <br>
+    <h1>@Model.Recipe.RecipeName</h1>
+    <img src = "@Model.Recipe.RecipeImage">
+    <br>
+    <h3>Time needed for Recipe: @Model.Recipe.RecipeDuration</h3>
+    <br>
+    <h3>Number of Ingredients: @Model.Recipe.IngredientList.Count()</h3>
+    <br>
+    <div>
+    <h2>Add an Ingredient:</h2>
+    <form asp-controller="Home" asp-action="AddIngredient" method="POST">
+        <input type="hidden" asp-for="@Model.Ingredient.RecipeId" value="@Model.Recipe.RecipeId"/>
+        <span asp-validation-for="@Model.Ingredient.IngredientName"></span>
+        <label asp-for="@Model.Ingredient.IngredientName"></label>
+        <input asp-for="@Model.Ingredient.IngredientName"/>
+        <br>
+        <span asp-validation-for="@Model.Ingredient.Quantity"></span>
+        <label asp-for="@Model.Ingredient.Quantity"></label>
+        <input asp-for="@Model.Ingredient.Quantity"/>
+        <br>
+        <label asp-for="@Model.Ingredient.Metric"></label>
+        <select asp-for="@Model.Ingredient.Metric">
+            <option>Teasepoon</option>
+            <option>Tablespoon</option>
+            <option>Cup</option>
+            <option>Pint</option>
+            <option>Quart</option>
+            <option>Gallon</option>
+        </select>
+        <br>
+        <input type="submit" value="Add an Ingredient to your Recipe!"/>
+    </form>
+        <form asp-controller="Home" asp-action="AddStep" method="POST">
+        <input type="hidden" asp-for="@Model.Step.RecipeId" value="@Model.Recipe.RecipeId"/>
+        <span asp-validation-for="@Model.Step.Text"></span>
+        <label asp-for="@Model.Step.Text"></label>
+        <textarea asp-for="@Model.Step.Text"></textarea>
+        <br>
+        <input type="submit" value="Add a Step to Your Recipe!"/>
+    </form>
+    </div>
+    <div>
+        <h4>Ingredients:</h4>
+            <ul>
+        @foreach(var ingredient in Model.Recipe.IngredientList)
+        {
+                <li>@ingredient.IngredientName: @ingredient.Quantity - @ingredient.Metric</li>
+        }
+            </ul>
+        <br>
+        <h4>List of Instructions:</h4>
+            <ol>
+        @foreach(var step in Model.Recipe.StepList)
+        {
+                <li>@step.Text</li>
+        }
+            </ol>
+    </div>
+    <br>
+</body>
+</html>

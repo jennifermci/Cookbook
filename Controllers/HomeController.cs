@@ -113,7 +113,120 @@ namespace Cookbook.Controllers
 
             return View("Main", MainWrapper);
         }
+        [HttpGet("newrecipe")]
+        public IActionResult AddRecipe()
+        {
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            if(fromLogin == null)
+            {
+                return RedirectToAction("Index");
+            }
+            AddWrapper AddWrapper = new AddWrapper();
+            AddWrapper.RegisterUser = fromLogin;
+            return View("AddRecipe", AddWrapper);
+        }
+        [HttpPost("createrecipe")]
+        public IActionResult CreateRecipe(AddWrapper fromForm)
+        {
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            if(ModelState.IsValid)
+            {
+                dbContext.Add(fromForm.Recipe);
+                dbContext.SaveChanges();
+                Recipe Recipe = dbContext.Recipes
+                    .Include(r => r.IngredientList)
+                    .Include(r => r.StepList)
+                    .Last();
+                EditWrapper EditWrapper = new EditWrapper();
+                EditWrapper.RegisterUser = fromLogin;
+                EditWrapper.Recipe = Recipe;
+                return View("EditRecipe", EditWrapper);
+            }
+            else
+            {
+                AddWrapper AddWrapper = new AddWrapper();
+                AddWrapper.RegisterUser = fromLogin;
+                return View("AddRecipe", AddWrapper);
+            }
+        }
 
+        [HttpGet("editrecipe/{RecipeId}")]
+        public IActionResult EditRecipe(int RecipeId){
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            EditWrapper EditWrapper = new EditWrapper();
+            Recipe Recipe = dbContext.Recipes
+                .Include(r => r.IngredientList)
+                .Include(r => r.StepList)
+                .FirstOrDefault(r => r.RecipeId == RecipeId);
+
+            EditWrapper.RegisterUser = fromLogin;
+            EditWrapper.Recipe = Recipe;
+            return View("EditRecipe", EditWrapper);
+        }
+
+        [HttpPost("addingredient")]
+        public IActionResult AddIngredient(EditWrapper fromForm)
+        {
+            if(ModelState.IsValid)
+            {
+                dbContext.Add(fromForm.Ingredient);
+                dbContext.SaveChanges();
+                int RecipeId = fromForm.Ingredient.RecipeId;
+                RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+                EditWrapper EditWrapper = new EditWrapper();
+                Recipe Recipe = dbContext.Recipes
+                    .Include(r => r.IngredientList)
+                    .Include(r => r.StepList)
+                    .FirstOrDefault(r => r.RecipeId == fromForm.Ingredient.RecipeId);
+                EditWrapper.RegisterUser = fromLogin;
+                EditWrapper.Recipe = Recipe;
+                return View("EditRecipe", EditWrapper);
+            }
+            else
+            {
+                RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+                EditWrapper EditWrapper = new EditWrapper();
+                Recipe Recipe = dbContext.Recipes
+                    .Include(r => r.IngredientList)
+                    .Include(r => r.StepList)
+                    .FirstOrDefault(r => r.RecipeId == fromForm.Ingredient.RecipeId);
+                EditWrapper.RegisterUser = fromLogin;
+                EditWrapper.Recipe = Recipe;
+                return View("EditRecipe", EditWrapper);
+            }
+        }
+
+        [HttpPost("addstep")]
+        public IActionResult AddStep(EditWrapper fromForm)
+        {
+            if(ModelState.IsValid)
+            {
+                dbContext.Add(fromForm.Step);
+                dbContext.SaveChanges();
+                int RecipeId = fromForm.Step.RecipeId;
+                RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+                EditWrapper EditWrapper = new EditWrapper();
+                Recipe Recipe = dbContext.Recipes
+                    .Include(r => r.IngredientList)
+                    .Include(r => r.StepList)
+                    .FirstOrDefault(r => r.RecipeId == fromForm.Step.RecipeId);
+                EditWrapper.RegisterUser = fromLogin;
+                EditWrapper.Recipe = Recipe;
+                return View("EditRecipe", EditWrapper);
+            }
+            else
+            {
+                RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+                EditWrapper EditWrapper = new EditWrapper();
+                Recipe Recipe = dbContext.Recipes
+                    .Include(r => r.IngredientList)
+                    .Include(r => r.StepList)
+                    .FirstOrDefault(r => r.RecipeId == fromForm.Step.RecipeId);
+                EditWrapper.RegisterUser = fromLogin;
+                EditWrapper.Recipe = Recipe;
+                return View("EditRecipe", EditWrapper);
+            }
+        }
     }
 
 
