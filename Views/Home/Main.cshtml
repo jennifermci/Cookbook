@@ -9,15 +9,13 @@
     <title>Sucess</title>
 </head>
 <body>
-    <h1>Welcome @Model.RegisterUser.FirstName:</h1>
-    @* <a href = "logout">Logout</a> *@
-
     <div id="mySidenav" class="sidenav">
         <a href="newRecipe" id="add">Add New Recipe</a>
         <a href="savedRecipes" id="saved">Saved Recipes</a>
         <a href="editUser" id="edit">Edit Profile</a>
         <a href="logout" id="logout">Log Out</a>
     </div>
+    <h1>Welcome @Model.RegisterUser.FirstName:</h1>
 
 @* 
     @foreach (var Pic in @Model.RecipeList)
