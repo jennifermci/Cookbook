@@ -1,32 +1,48 @@
 @model Cookbook.Models.AddWrapper;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">   
+
     <title>New Recipe</title>
 </head>
-<body>
-    <a href = "logout">Logout</a>
-    <br/>
-    <br/>
-    <h1>@Model.RegisterUser.FirstName, Add a New Recipe:</h1>
-    <form asp-controller="Home" asp-action="CreateRecipe" method="POST">
-        <input type="hidden" asp-for="@Model.Recipe.CreatorId" value="@Model.RegisterUser.UserId"/>
-        <span asp-validation-for="@Model.Recipe.RecipeName"></span>
-        <label asp-for="@Model.Recipe.RecipeName"></label>
-        <input asp-for="@Model.Recipe.RecipeName"/>
-        <br>
-        <span asp-validation-for="@Model.Recipe.RecipeImage"></span>
-        <label asp-for="@Model.Recipe.RecipeImage"></label>
-        <input asp-for="@Model.Recipe.RecipeImage"/>
-        <br>
-        <span asp-validation-for="@Model.Recipe.RecipeDuration"></span>
-        <label> How Long does your recipe take to make?</label>
-        <input asp-for="@Model.Recipe.RecipeDuration"/>
-        <br>
-        <input type="submit" value="Add a New Recipe"/>
-    </form>
+<body data-spy="scroll" data-target=".navbar" >
+        @* ******************This is the nav tabs on top of the page*************** *@
+    <div class="container">
+    <nav class="navbar-inverse navbar-fixed-top">
+        <ul class="nav nav-tabs nav-left-justified">
+            <li id="home" ><a data-toggle="tab" href="/main">Home</a></li>
+            <li id="add" class="active"><a data-toggle="tab" href="newrecipe">Add New Recipe</a></li>
+            <li id="saved"><a data-toggle="tab" href="/savedRecipes">Saved Recipes</a></li>
+            <li id="edit"><a data-toggle="tab" href="/editUser">Edit Profile</a></li>
+            <li id="logout"><a data-toggle="tab" href="/logout">Log Out</a></li>
+        </ul>
+    </nav> 
+
+        <h1>@Model.RegisterUser.FirstName, Add a New Recipe:</h1>
+
+        <form asp-controller="Home" asp-action="CreateRecipe" method="POST">
+            <input type="hidden" asp-for="@Model.Recipe.CreatorId" value="@Model.RegisterUser.UserId"/>
+            <span asp-validation-for="@Model.Recipe.RecipeName"></span>
+            <label asp-for="@Model.Recipe.RecipeName"></label>
+            <input asp-for="@Model.Recipe.RecipeName"/>
+            <br>
+            <span asp-validation-for="@Model.Recipe.RecipeImage"></span>
+            <label asp-for="@Model.Recipe.RecipeImage"></label>
+            <input asp-for="@Model.Recipe.RecipeImage"/>
+            <br>
+            <span asp-validation-for="@Model.Recipe.RecipeDuration"></span>
+            <label> How Long does your recipe take to make?</label>
+            <input asp-for="@Model.Recipe.RecipeDuration"/>
+            <br>
+            <input type="submit" value="Add a New Recipe"/>
+        </form>
+
+    </div>
+    
 
 </body>
 </html>

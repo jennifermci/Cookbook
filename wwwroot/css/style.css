@@ -1,36 +1,69 @@
-#mySidenav a {
-    position: absolute; /* Position them relative to the browser window */
-    left: -80px; /* Position them outside of the screen */
-    transition: 0.3s; /* Add transition on hover */
-    padding: 15px; /* 15px padding */
-    width: 100px; /* Set a specific width */
-    text-decoration: none; /* Remove underline */
-    font-size: 20px; /* Increase font size */
-    color: white; /* White text color */
-    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
-  }
-  
-  #mySidenav a:hover {
-    left: 0; /* On mouse-over, make the elements appear as they should */
-  }
-  
-  /* The about link: 20px from the top with a green background */
-  #add {
-    top: 20px;
-    background-color: #2196F3;
-  }
-  
-  #saved {
-    top: 80px;
-    background-color: #2196F3;
-  }
-  
-  #edit {
-    top: 140px;
-    background-color: #2196F3; 
-  }
-  
-  #logout {
-    top: 200px;
-    background-color: #2196F3;
-  }
+#home{
+  /* background-color: #fee3c6; */
+  color: black;
+  font-weight: bold;
+}
+ 
+ 
+#add {
+/* background-color: #fee3c6; */
+color: black;
+font-weight: bold;
+}
+
+#saved {
+  /* background-color: #fee3c6; */
+  color: black;
+  font-weight: bold;
+}
+
+#edit {
+  /* background-color: #fee3c6; */
+  color: black;
+  font-weight: bold;
+}
+
+#logout {
+  /* background-color: #fee3c6; */
+  color: black;
+  font-weight: bold;
+}
+
+.container{
+  margin-top: 20px;
+}
+.navbar{
+  margin-top: 20px;
+  display: block;
+}
+
+.bannerpicture{
+  height: 400px;
+  width: 100%;
+  margin-top: 100px;
+  display: block;
+}
+
+/* .gallery{
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 5vw);
+  grid-gap: 15px;
+} */
+
+.gallery{
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  border-radius: 10px;
+  margin: 15px;
+}
+
+.detailsPic{
+  width: 200px;
+  height: 200px;
+}
+
+.h1{
+  color: red !important;
+}

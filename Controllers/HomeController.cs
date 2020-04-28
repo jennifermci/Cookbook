@@ -100,7 +100,6 @@ namespace Cookbook.Controllers
         }
 
         [HttpGet("main")]
-
         public IActionResult Main()
         {
             RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
@@ -110,9 +109,11 @@ namespace Cookbook.Controllers
             }
             MainWrapper MainWrapper = new MainWrapper();
             MainWrapper.RegisterUser = fromLogin;
+            MainWrapper.RecipeList = dbContext.Recipes.ToList();
 
             return View("Main", MainWrapper);
         }
+
         [HttpGet("newrecipe")]
         public IActionResult AddRecipe()
         {
@@ -233,7 +234,7 @@ namespace Cookbook.Controllers
             return View();
         }
 
-        [HttpGet("details")]
+        [HttpGet("details/{RecipeId}")]
         public IActionResult RecipeDetails(int RecipeId)
         {
             Recipe ThisRecipe = dbContext.Recipes
@@ -243,7 +244,14 @@ namespace Cookbook.Controllers
             DetailsWrapper DetailsWrapper = new DetailsWrapper();
             DetailsWrapper.Recipe = ThisRecipe;
 
+
             return View(DetailsWrapper);
+        }
+
+        [HttpGet("savedRecipes")]
+        public IActionResult SavedRecipes()
+        {
+            return View();
         }
 
     }
