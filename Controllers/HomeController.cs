@@ -233,19 +233,125 @@ namespace Cookbook.Controllers
             return View();
         }
 
-        [HttpGet("details")]
+        [HttpGet("details/{RecipeId}")]
         public IActionResult RecipeDetails(int RecipeId)
         {
-            Recipe ThisRecipe = dbContext.Recipes
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            RegisterUser RegisterUser = dbContext.Users
+                .Include(u => u.TipLikes)
+                .FirstOrDefault(u=>u.UserId == fromLogin.UserId);
+            Recipe ThisRecipe = Enumerable.Reverse(dbContext.Recipes
                 .Include(r => r.IngredientList)
                 .Include(r => r.StepList)
+                .Include(r=>r.Tips)
+                .ThenInclude(t => t.User)
+                .Include(r=>r.Tips)
+                .ThenInclude(t=> t.Comments)
+                .Include(r=>r.Tips)
+                .ThenInclude(t=> t.Likes))
                 .FirstOrDefault(r => r.RecipeId == RecipeId);
             DetailsWrapper DetailsWrapper = new DetailsWrapper();
             DetailsWrapper.Recipe = ThisRecipe;
+            DetailsWrapper.User = RegisterUser;
 
             return View(DetailsWrapper);
         }
+        [HttpPost("addtip")]
+        public IActionResult AddTip(DetailsWrapper fromForm)
+        {
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            if(ModelState.IsValid)
+            {
+                dbContext.Add(fromForm.Tip);
+                dbContext.SaveChanges();
+                var RecipeId = fromForm.Tip.RecipeId;
+                return Redirect($"details/{RecipeId}");
+            }
+            else 
+            {
+                Recipe ThisRecipe = Enumerable.Reverse(dbContext.Recipes
+                    .Include(r => r.IngredientList)
+                    .Include(r => r.StepList)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t => t.User)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t=> t.Comments)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t=> t.Likes))
+                    .FirstOrDefault(r => r.RecipeId == fromForm.Tip.RecipeId);
+                DetailsWrapper DetailsWrapper = new DetailsWrapper();
+                DetailsWrapper.Recipe = ThisRecipe;
+                DetailsWrapper.User = fromLogin;
 
+            return View("RecipeDetails",DetailsWrapper);
+            }
+        }
+        [HttpPost("addcomment")]
+        public IActionResult AddComment(DetailsWrapper fromForm, int RecipeId)
+        {
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            if(ModelState.IsValid)
+            {
+                dbContext.Add(fromForm.Comment);
+                dbContext.SaveChanges();
+                return Redirect($"details/{RecipeId}");
+            }
+            else 
+            {
+                Recipe ThisRecipe = Enumerable.Reverse(dbContext.Recipes
+                    .Include(r => r.IngredientList)
+                    .Include(r => r.StepList)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t => t.User)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t=> t.Comments)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t=> t.Likes))
+                    .FirstOrDefault(r => r.RecipeId == RecipeId);
+                DetailsWrapper DetailsWrapper = new DetailsWrapper();
+                DetailsWrapper.Recipe = ThisRecipe;
+                DetailsWrapper.User = fromLogin;
+
+                return View("RecipeDetails",DetailsWrapper);
+            }
+        }
+        [HttpPost("addtiplike")]
+        public IActionResult AddTipLike(DetailsWrapper fromForm, int RecipeId)
+        {
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            if(ModelState.IsValid)
+            {
+                dbContext.Add(fromForm.Like);
+                dbContext.SaveChanges();
+                return Redirect($"details/{RecipeId}");
+            }
+            else
+            {
+                Recipe ThisRecipe = Enumerable.Reverse(dbContext.Recipes
+                    .Include(r => r.IngredientList)
+                    .Include(r => r.StepList)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t => t.User)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t=> t.Comments)
+                    .Include(r=>r.Tips)
+                    .ThenInclude(t=> t.Likes))
+                    .FirstOrDefault(r => r.RecipeId == RecipeId);
+                DetailsWrapper DetailsWrapper = new DetailsWrapper();
+                DetailsWrapper.Recipe = ThisRecipe;
+                DetailsWrapper.User = fromLogin;
+
+                return View("RecipeDetails",DetailsWrapper);
+            }
+        }
+        [HttpPost("deletetiplike")]
+        public IActionResult RemoveTipLike(DetailsWrapper fromForm, int RecipeId)
+        {
+            Like ToDelete = dbContext.Likes.FirstOrDefault(l => l.UserTipId == fromForm.Like.UserTipId && l.TipId == fromForm.Like.TipId);
+            dbContext.Remove(ToDelete);
+            dbContext.SaveChanges();
+            return Redirect($"details/{RecipeId}");
+        }
     }
 
 
