@@ -8,5 +8,7 @@ namespace Cookbook.Models
     public class MainWrapper
     {
         public RegisterUser RegisterUser {get;set;}
+        public List<Recipe> RecipeList { get; set; }
+        
     }
 }

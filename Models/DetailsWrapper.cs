@@ -7,9 +7,11 @@ namespace Cookbook.Models
     {
         public Recipe Recipe { get; set; }
         public List<Ingredient> IngredientsList { get; set; }
+        public List<Recipe> RecipeList { get; set; }
         public List<Step> StepsList { get; set; }
 
         public RegisterUser User { get; set; }
     }
 
 }
+

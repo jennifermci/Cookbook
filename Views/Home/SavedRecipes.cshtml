@@ -1,0 +1,41 @@
+@model MainWrapper;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">   
+    <title>Sucess</title>
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+    @* ******************This is the nav tabs on top of the page*************** *@
+    <nav class="navbar-inverse navbar-fixed-top">
+        <ul class="nav nav-tabs nav-left-justified">
+            <li id="home" ><a data-toggle="tab" href="main">Home</a></li>
+            <li id="add"><a data-toggle="tab" href="newrecipe">Add New Recipe</a></li>
+            <li id="saved" class="active"><a data-toggle="tab" href="savedRecipes">Saved Recipes</a></li>
+            <li id="edit"><a data-toggle="tab" href="editUser">Edit Profile</a></li>
+            <li id="logout"><a data-toggle="tab" href="logout">Log Out</a></li>
+        </ul>
+    </nav>  
+
+@* 
+    <div class="container">
+        <h1>Welcome @Model.RegisterUser.FirstName:</h1>
+
+        @foreach (var Pic in @Model.RegisterUser.Recipes)
+        {
+            <div>
+
+                <img src="@Pic.RecipeImage" alt="Recipe Image" /> 
+                <a href="/details/@Pic.RecipeId">@Pic.RecipeName</a>
+
+            </div>
+        }
+    </div>   *@
+    
+
+</body>
+</html>
