@@ -38,8 +38,8 @@ namespace Cookbook.Models
         public List<Tip> Tips {get;set;}
         public List<Recipe> Recipes {get;set;}
 
-        [InverseProperty("UserCommentLikes")]
-        public List<Like> CommentLikes {get;set;}
+        // [InverseProperty("UserCommentLikes")]
+        // public List<Like> CommentLikes {get;set;}
 
         [InverseProperty("UserTipLikes")]        
         public List<Like> TipLikes {get;set;}

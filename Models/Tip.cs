@@ -14,6 +14,8 @@ namespace Cookbook.Models
 
         public int UserId {get;set;}
         public RegisterUser User {get;set;}
+        public int RecipeId {get;set;}
+        public Recipe Recipe {get;set;}
         public List<Comment> Comments {get;set;}
         public List<Like> Likes {get;set;}
         public DateTime CreatedAt { get; set; } = DateTime.Now;

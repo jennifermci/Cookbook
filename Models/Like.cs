@@ -12,12 +12,12 @@ namespace Cookbook.Models
         [Required]
 
         public int UserTipId {get;set;}
-        public int UserCommentId {get;set;}
+        // public int UserCommentId {get;set;}
 
-        public RegisterUser UserCommentLikes {get;set;}
+        // public RegisterUser UserCommentLikes {get;set;}
         public RegisterUser UserTipLikes {get;set;}
-        public int CommentId {get;set;}
-        public Comment Comment {get;set;}
+        // public int CommentId {get;set;}
+        // public Comment Comment {get;set;}
         public int TipId {get;set;}
         public Tip Tip {get;set;}
         public DateTime CreatedAt { get; set; } = DateTime.Now;

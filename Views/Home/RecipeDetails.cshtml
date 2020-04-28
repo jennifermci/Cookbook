@@ -7,6 +7,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style>
+        .tip {
+            resize: none;
+            border: 1px solid black;
+            border-radius: 10px;
+            height: 35px;
+            margin-right: 15px;
+            width: 350px;
+            text-align: center;
+            padding: 5px 0;
+        }
+        .likebutton {
+            height: 20px;
+            width: auto;
+        }
+        .postbutton {
+            border-radius: 10px;
+            height: 35px;
+            border: 1px solid black;
+        }
+        .comment {
+            margin-left: 50px;
+        }
+        .commentbox {
+            margin-left: 150px;
+        }
+        .like {
+            border-radius: 10px;
+            border: 1px solid black;
+            height: 20px;
+            background-color: lightsteelblue;
+        }
+        .likebutton{
+            display: inline-block;
+        }
+
+    </style>
     <title>Details</title>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -46,5 +83,68 @@
 
         </div>
    
+    </div>  
+    <div>
+        <form asp-controller="Home" asp-action="AddTip" method="POST" class = "form-inline">
+            <input type="hidden" asp-for="@Model.Tip.RecipeId" value="@Model.Recipe.RecipeId"/>
+            <input type="hidden" asp-for="@Model.Tip.UserId" value="@Model.User.UserId"/>
+            <span asp-validation-for="@Model.Tip.Text"></span>
+            <textarea class = "tip" asp-for="@Model.Tip.Text" placeholder = "Suggest a helpful tip?"></textarea>
+            <br>
+            <input class = "postbutton" type="submit" value="Post"/>
+        </form>
+        @foreach(var tip in @Model.Recipe.Tips)
+        {
+            <div>
+                <h5>@tip.User.FirstName @tip.User.LastName (@tip.CreatedAt):</h5>
+                <p>@tip.Text</p>
+            </div>
+            <img class = "likebutton" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7ultGQ7r4yzTFVgEBy2WtLpR6SKiJnUPMBDccaaGVmc1gqNlO&usqp=CAU"><span>@tip.Likes.Count()</span>
+
+            bool included = false;
+            @foreach(var like in @tip.Likes)
+            {
+                    if(like.UserTipId == @Model.User.UserId)
+                    {
+                        included = true;
+                        <div class = "likebutton">
+                        <form asp-controller="Home" asp-action="RemoveTipLike" method="POST" asp-route-RecipeId="@Model.Recipe.RecipeId">
+                            <input type="hidden" asp-for="@Model.Like.UserTipId" value="@Model.User.UserId"/>
+                            <input type="hidden" asp-for="@Model.Like.TipId" value="@tip.TipId"/>
+                            <td><input class = "like" type="submit" value="Un-Like"/></td>
+                        </form>
+                        </div>
+                    }
+            }
+            if(included == false)
+            {
+                <div class = "likebutton">
+                <form asp-controller="Home" asp-action="AddTipLike" method="POST" asp-route-RecipeId="@Model.Recipe.RecipeId">
+                    <input type="hidden" asp-for="@Model.Like.UserTipId" value="@Model.User.UserId"/>
+                    <input type="hidden" asp-for="@Model.Like.TipId" value="@tip.TipId"/>
+                    <td><input class = "like" type="submit" value="Like"/></td>
+                </form>
+                </div>
+            }
+
+            @foreach(var comment in tip.Comments)
+            {
+                <div class="comment">
+                    <h5>@comment.User.FirstName @comment.User.LastName (@comment.CreatedAt):</h5>
+                    <p>@comment.Text</p>
+                </div>
+            }
+            <div class = "commentbox">
+                <form asp-controller="Home" asp-action="AddComment" method="POST" asp-route-RecipeId="@Model.Recipe.RecipeId" class = "form-inline">
+                    <input type="hidden" asp-for="@Model.Comment.TipId" value="@tip.TipId"/>
+                    <input type="hidden" asp-for="@Model.Comment.UserId" value="@Model.User.UserId"/>
+                    <span asp-validation-for="@Model.Comment.Text"></span>
+                    <textarea class = "tip" asp-for="@Model.Comment.Text" placeholder="Add A New Comment!"></textarea>
+                    <br>
+                    <input class = "postbutton" type="submit" value="Post"/>
+                </form>
+            </div>
+        }
+    </div>  
 </body>
 </html>

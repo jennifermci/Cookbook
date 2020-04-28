@@ -28,5 +28,6 @@ namespace Cookbook.Models
 
         public List<Ingredient> IngredientList { get; set; }
         public List<Step> StepList { get; set; }
+        public List<Tip> Tips {get;set;}
     }
 }

@@ -43,7 +43,7 @@
         <br>
         <input type="submit" value="Add an Ingredient to your Recipe!"/>
     </form>
-        <form asp-controller="Home" asp-action="AddStep" method="POST">
+    <form asp-controller="Home" asp-action="AddStep" method="POST">
         <input type="hidden" asp-for="@Model.Step.RecipeId" value="@Model.Recipe.RecipeId"/>
         <span asp-validation-for="@Model.Step.Text"></span>
         <label asp-for="@Model.Step.Text"></label>
