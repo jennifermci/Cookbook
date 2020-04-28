@@ -227,6 +227,25 @@ namespace Cookbook.Controllers
                 return View("EditRecipe", EditWrapper);
             }
         }
+        [HttpGet("editUser")]
+        public IActionResult EditUser()
+        {
+            return View();
+        }
+
+        [HttpGet("details")]
+        public IActionResult RecipeDetails(int RecipeId)
+        {
+            Recipe ThisRecipe = dbContext.Recipes
+                .Include(r => r.IngredientList)
+                .Include(r => r.StepList)
+                .FirstOrDefault(r => r.RecipeId == RecipeId);
+            DetailsWrapper DetailsWrapper = new DetailsWrapper();
+            DetailsWrapper.Recipe = ThisRecipe;
+
+            return View(DetailsWrapper);
+        }
+
     }
 
 
