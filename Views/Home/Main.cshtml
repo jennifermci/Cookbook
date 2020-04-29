@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">   
     <link rel="stylesheet" type="text/css" href="css/style.css" >
     <title>Sucess</title>
+
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
     @* ******************This is the nav tabs on top of the page*************** *@
@@ -29,9 +30,16 @@
         </ul>
     </nav>  
 
-        <div class="bannerpicture" >
+        @* <div class="bannerBackground">
             <img class="bannerpicture"  src="https://image.freepik.com/free-photo/board-amidst-cooking-ingredients_23-2147749529.jpg" alt="Image">
+        </div> *@
+
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1 style="font-size:50px">Welcome to the Cookbook!</h1>
+            <h3>Where you can manage your recipes!</h3>
         </div>
+    </div>
 
     <div class="container">
         <h1>Welcome @Model.RegisterUser.FirstName:</h1>

@@ -17,6 +17,7 @@
             width: 350px;
             text-align: center;
             padding: 5px 0;
+            display: inline-block;
         }
         .likebutton {
             height: 20px;
@@ -42,6 +43,14 @@
         .likebutton{
             display: inline-block;
         }
+        .wholeWrapper{
+            margin-top: 100px;
+            text-align: center;
+        }
+        .detailsPic{
+            width: 300px;
+            height: 300px;
+        }
 
     </style>
     <title>Details</title>
@@ -55,11 +64,11 @@
             <li id="edit"><a data-toggle="tab" href="/editUser">Edit Profile</a></li>
             <li id="logout"><a data-toggle="tab" href="/logout">Log Out</a></li>
         </ul>
-    </nav>     
-        
-
-        <h1>@Model.Recipe.RecipeName</h1>
+    </nav>  
+    <div class="wholeWrapper">  
+    
         <div class="container">
+            <h1>@Model.Recipe.RecipeName</h1>
 
             <img class="detailsPic" src="@Model.Recipe.RecipeImage"/>
 
@@ -81,7 +90,7 @@
                 </ul>
             </div>
 
-        </div>
+        
    
     </div>  
     <div>
@@ -145,6 +154,8 @@
                 </form>
             </div>
         }
-    </div>  
+    </div>
+    </div>   
+    </div> 
 </body>
 </html>

@@ -228,11 +228,24 @@ namespace Cookbook.Controllers
                 return View("EditRecipe", EditWrapper);
             }
         }
+
         [HttpGet("editUser")]
-        public IActionResult EditUser()
+        public IActionResult EditUser(int userId)
         {
-            return View();
+            RegisterUser ToEdit = dbContext.Users.FirstOrDefault(u => u.UserId == userId);
+
+            return View(ToEdit);
         }
+
+        // [HttpPost("update")]
+        // public IActionResult EditThisUser(int userId,RegisterUser fromForm)
+        // {
+        //     if(ModelState.IsValid)
+        //     {
+        //         if(dbContext.RegisterUser.Any(u => u.))
+        //     }
+
+        // }
 
         [HttpGet("details/{RecipeId}")]
         public IActionResult RecipeDetails(int RecipeId)
