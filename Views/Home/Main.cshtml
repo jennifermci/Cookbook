@@ -17,7 +17,7 @@
             <li id="home" class="active"><a data-toggle="tab" href="/main">Home</a></li>
             <li id="add"><a data-toggle="tab" href="/newrecipe">Add New Recipe</a></li>
             <li id="saved"><a data-toggle="tab" href="/savedRecipes">Saved Recipes</a></li>
-            <li id="edit"><a data-toggle="tab" href="/editUser">Edit Profile</a></li>
+            <li id="edit"><a data-toggle="tab" href="/editUser/@Model.RegisterUser.UserId">Edit Profile</a></li>
             <li id="logout"><a data-toggle="tab" href="/logout">Log Out</a></li>
             <li style = "float: right;">
                 <form class="navbar-form navbar-right" action="/action_page.php">
@@ -29,10 +29,6 @@
             </li>
         </ul>
     </nav>  
-
-        @* <div class="bannerBackground">
-            <img class="bannerpicture"  src="https://image.freepik.com/free-photo/board-amidst-cooking-ingredients_23-2147749529.jpg" alt="Image">
-        </div> *@
 
     <div class="hero-image">
         <div class="hero-text">

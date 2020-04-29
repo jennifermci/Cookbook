@@ -1,0 +1,43 @@
+.RecipePicture{
+    height: 300px;
+    width: 300px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 5px;
+}
+
+.container{
+    text-align: left;
+    margin-top: 100px;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Courier, monospace;
+  }
+.RecipeTitle{
+    font-weight: bold;
+}
+
+.Notebookpaper{
+    background-image: url("https://www.wpclipart.com/education/supplies/paper/notepad_page.png");
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    background-size:100%;
+    padding-left: 115px;
+    padding-top: 100px;
+    width: 600px;
+    display: inline-block;
+    /* height: 100%; */
+    font-family: 'Indie Flower', cursive;
+    font-family: 'Satisfy', cursive;
+    font-family: 'Homemade Apple', cursive;
+    vertical-align: top;
+    margin-left: 25px;;
+}
+
+.LEFTside{
+    display: inline-block;
+}
