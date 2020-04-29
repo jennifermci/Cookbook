@@ -1,4 +1,4 @@
-@model RegisterUser;
+@model Cookbook.Models.UserPageWrapper
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +64,16 @@
             </div>
         </form>
 
+    </div>
+
+    <div>
+        <h2>Your Recipes:</h2>
+        <ul>
+            @foreach(var recipe in @Model.MyRecipes)
+            {
+                <li><a href="createrecipe/@recipe.RecipeId">@recipe.RecipeName</a></li>
+            }
+        </ul>
     </div>
     
 </body>

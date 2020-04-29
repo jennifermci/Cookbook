@@ -107,9 +107,19 @@ namespace Cookbook.Controllers
             {
                 return RedirectToAction("Index");
             }
+            RegisterUser User = dbContext.Users
+                .Include(u=>u.Hides)
+                .FirstOrDefault(u => u.UserId == fromLogin.UserId); 
             MainWrapper MainWrapper = new MainWrapper();
-            MainWrapper.RegisterUser = fromLogin;
-            MainWrapper.RecipeList = dbContext.Recipes.ToList();
+            MainWrapper.RegisterUser = User;
+            
+            List<Recipe> AllRecipes = dbContext.Recipes.ToList();
+            foreach(var hide in User.Hides)
+            {
+                Recipe temp = dbContext.Recipes.FirstOrDefault(r => r.RecipeId == hide.RecipeId);
+                AllRecipes.Remove(temp);
+            }
+            MainWrapper.RecipeList = AllRecipes;
 
             return View("Main", MainWrapper);
         }
@@ -415,6 +425,30 @@ namespace Cookbook.Controllers
             dbContext.SaveChanges();
             return Redirect($"details/{RecipeId}");
         }
+
+       [HttpGet("addhide/{RecipeId}")] 
+       public IActionResult AddHide(int RecipeId)
+       {
+           RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+           Hide Hide = new Hide();
+           Hide.RecipeId = RecipeId;
+           Hide.UserId = fromLogin.UserId;
+           dbContext.Add(Hide);
+           dbContext.SaveChanges();
+           return RedirectToAction("Main");
+       }
+
+       [HttpGet("addfavorite/{RecipeId}")]
+       public IActionResult AddFavorite(int RecipeId)
+       {
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            Favorite Favorite = new Favorite();
+            Favorite.RecipeId = RecipeId;
+            Favorite.UserId = fromLogin.UserId;
+            dbContext.Add(Favorite);
+            dbContext.SaveChanges();
+            return RedirectToAction("SavedRecipes");
+       }
     }
 
 

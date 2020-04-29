@@ -47,6 +47,7 @@ namespace Cookbook.Models
         [InverseProperty("UserTipLikes")]        
         public List<Like> TipLikes {get;set;}
         public List<Favorite> Favorites {get;set;}
+        public List<Hide> Hides {get;set;}
 
     }
 }
