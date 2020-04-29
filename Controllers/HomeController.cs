@@ -249,25 +249,32 @@ namespace Cookbook.Controllers
             {
                 return RedirectToAction("Index");
             }
-            RegisterUser ToEdit = dbContext.Users.FirstOrDefault(u => u.UserId == userId);
-            return View(ToEdit);
+            RegisterUser ToEdit = dbContext.Users
+                .Include(u => u.Recipes)
+                .FirstOrDefault(u => u.UserId == userId);
+            UserPageWrapper UserPageWrapper = new UserPageWrapper();
+            UserPageWrapper.RegisterUser = ToEdit;
+            List<Recipe> MyRecipes = new List<Recipe>();
+
+            MyRecipes = dbContext.Recipes.Where(r=>r.CreatorId == ToEdit.UserId).ToList();
+
+            UserPageWrapper.MyRecipes = MyRecipes;
+
+            return View(UserPageWrapper);
         }
 
         [HttpPost("update/{userId}")]
-        public IActionResult EditThisUser(int userId, RegisterUser fromForm)
+        public IActionResult EditThisUser(int userId, UserPageWrapper fromForm)
         {
             RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
 
             RegisterUser User = dbContext.Users.FirstOrDefault(r => r.UserId == fromLogin.UserId); 
-            User.FirstName = fromForm.FirstName;
-            User.LastName = fromForm.LastName;
+            User.FirstName = fromForm.RegisterUser.FirstName;
+            User.LastName = fromForm.RegisterUser.LastName;
             User.UserId = userId;
-            User.Email = fromForm.Email;
+            User.Email = fromForm.RegisterUser.Email;
 
-            // if(ModelState.IsValid)
-            // {
-
-                if(dbContext.Users.Any(u => u.Email == fromForm.Email ))
+                if(dbContext.Users.Any(u => u.Email == fromForm.RegisterUser.Email ))
                 {
                     ModelState.AddModelError("Email", "Email already in use!");
                     return View("EditUser", User);
@@ -280,11 +287,6 @@ namespace Cookbook.Controllers
                 HttpContext.Session.SetObjectAsJson("LoggedInUser", User);
 
                 return RedirectToAction("Main");
-            // }
-            // else
-            // {
-            //     return View("EditUser", fromForm);
-            // }
 
         }
 
@@ -342,22 +344,16 @@ namespace Cookbook.Controllers
             }
         }
 
-        // [HttpGet("savedRecipes")]
-        // public IActionResult SavedRecipes(int UserId)
-        // {
-        //     RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
-        //     if(fromLogin == null)
-        //     {
-        //         return RedirectToAction("Index");
-        //     }
-
-        //     FavoritesWrapper FavoritesWrapper = new FavoritesWrapper();
-        //     RecipeList recipeList = dbContext.Recipes
-        //         .Include(f => f.UserFavorites).ToList();
-
-        //     FavoritesWrapper.RecipeList = RecipeList;
-        //     return View(FavoritesWrapper);
-        // }
+        [HttpGet("savedRecipes")]
+        public IActionResult SavedRecipes(int UserId)
+        {
+            RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+            RegisterUser User = dbContext.Users 
+                .Include(u => u.Favorites)
+                .ThenInclude(f=> f.Recipe)
+                .FirstOrDefault(u => u.UserId == fromLogin.UserId);
+            return View(User);
+        }
 
         [HttpPost("addcomment")]
         public IActionResult AddComment(DetailsWrapper fromForm, int RecipeId)

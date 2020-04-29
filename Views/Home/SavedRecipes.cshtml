@@ -16,25 +16,24 @@
             <li id="home" ><a data-toggle="tab" href="main">Home</a></li>
             <li id="add"><a data-toggle="tab" href="newrecipe">Add New Recipe</a></li>
             <li id="saved" class="active"><a data-toggle="tab" href="savedRecipes">Saved Recipes</a></li>
-            <li id="edit"><a data-toggle="tab" href="editUser">Edit Profile</a></li>
+            <li id="edit"><a data-toggle="tab" href="/editUser/@Model.UserId">Edit Profile</a></li>
             <li id="logout"><a data-toggle="tab" href="logout">Log Out</a></li>
         </ul>
     </nav>  
 
-@* 
+
     <div class="container">
-        <h1>Welcome @Model.RegisterUser.FirstName:</h1>
-
-        @foreach (var Pic in @Model.RegisterUser.Recipes)
+        <h1>Welcome @Model.FirstName:</h1>
+        <h2>Your Favorite Recipes:</h2>
+        @foreach (var favorite in @Model.Favorites)
         {
-            <div>
+            <div id = "@favorite.RecipeId">
 
-                <img src="@Pic.RecipeImage" alt="Recipe Image" /> 
-                <a href="/details/@Pic.RecipeId">@Pic.RecipeName</a>
+                <img src="@favorite.Recipe.RecipeImage" alt="@favorite.Recipe.RecipeName" /> 
 
             </div>
         }
-    </div>   *@
+    </div>  
     
 
 </body>
