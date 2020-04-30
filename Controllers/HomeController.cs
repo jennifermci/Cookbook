@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Net.Mail;
+
 
 namespace Cookbook.Controllers
 {
@@ -445,6 +447,53 @@ namespace Cookbook.Controllers
             dbContext.SaveChanges();
             return RedirectToAction("SavedRecipes");
        }
+
+       [HttpGet("email/{RecipeId}")]
+           public IActionResult Email(int RecipeId)
+            {
+                RegisterUser fromLogin = HttpContext.Session.GetObjectFromJson<RegisterUser>("LoggedInUser");
+                Recipe Recipe = dbContext.Recipes.FirstOrDefault(r => r.RecipeId == RecipeId);
+                try
+                {
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress("TheRecipeYouRequested@gmail.com");
+                mail.To.Add($"{fromLogin.Email}");
+                mail.Subject = $"Your Recipe for {Recipe.RecipeName}!";
+                mail.Body = "<h1>The Recipe You Requested:<h1>"+
+                "<br>"+
+                $"<h2>{Recipe.RecipeName}</h2>"+
+                "<br>"+
+                // $"<img style=\"width: 200px; height: 200px;\" src=\"{Recipe.RecipeImage}\"/>"+
+                $"<img style=\"width: 200px; height: 200px;\" src=\"https://www.thewholesomedish.com/wp-content/uploads/2018/07/Best-Lasagna-550-500x500.jpg\"/>"+
+                "<br>"+
+                $"<h5>This Recipe takes {Recipe.RecipeDuration} Minutes</h5>"+
+                "<br>"+
+                $"<h5>View More Details on this Recipe: <a href=\"http://localhost:5000/details/{Recipe.RecipeId}\">{Recipe.RecipeName}</a></h5>"+
+                "<br>"+
+                "<h3>Visit your <a href=\"http://localhost:5000\">COOKBOOK</a> to find more recipes!</h3>"+
+                "<br>"+
+                "<h4>Thanks!</h4>";
+
+                mail.IsBodyHtml = true;
+
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("TheRecipeYouRequested@gmail.com", "password@123!");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(mail);
+                
+                return RedirectToAction("Main");
+
+                }
+                catch(Exception)
+                {
+                    return RedirectToAction("Main");
+                }
+            }
+
+       
     }
 
 
