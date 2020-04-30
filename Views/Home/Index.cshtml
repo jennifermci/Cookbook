@@ -6,23 +6,61 @@
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     @* <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    *@
+    <style>
+        body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Courier, monospace;
+        background-image: url("https://storage.needpix.com/rsynced_images/background-2850211_1280.jpg");
+        @* background-repeat: no-repeat; *@
+        color: white;
+        background-size: auto;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .headers{
+            text-align: center;
+            padding-top: 50px;
+            font-weight: bold;
+        }
+        .form-control{
+            width: 200px;
+        }
+        .formWrapper{
+            margin-left: 50px;;
+        }
+        .JustForceIt{
+            margin-left: 350px;
+        }
 
+    </style>
 
 </head>
 <body>
+    <div class="headers">
+        <h1 style="font-weight: bold">Welcome to the Cookbook!</h1>
+        <h3 style="font-weight: bold">Please sign in or register</h3>
+
+    </div>
+
 
     <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <h2>Register</h2>
-                <partial name="Register"/>  
+        <div class="JustForceIt">
+            <div class="row">
+                <div >
+                    <h2>Register</h2>
+                    <partial name="Register"/>  
+                </div>
+                <div class="formWrapper" >
+                    <h1>Login</h1>
+                    <partial name="Login"/>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <h1>Login</h1>
-                <partial name="Login"/>
-            </div>
+
         </div>
     <div>
+
 
 </body>
 </html>

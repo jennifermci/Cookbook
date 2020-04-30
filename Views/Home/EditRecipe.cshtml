@@ -17,9 +17,9 @@
             border-width: 5px;
         }
 
-        .container{
-            text-align: left;
-            margin-top: 100px;
+        .containerCenter{
+            position: relative;
+            text-align: center;
         }
 
         body, html {
@@ -44,13 +44,26 @@
             font-family: 'Indie Flower', cursive;
             font-family: 'Satisfy', cursive;
             font-family: 'Homemade Apple', cursive;
+            margin-top: 100px;
             vertical-align: top;
-            margin-left: 25px;;
+            margin-left: 20px;
+            height: 760px;
+            text-align: left;
+            overflow: auto;
         }
 
         .LEFTside{
             display: inline-block;
+            margin-top: 100px;
+            border: 5px solid black;
+            border-radius: 10px;
+            padding: 10px;
         }
+        .form-group{
+            padding: 10px;
+
+        }
+        
     </style>
     <title>Edit Your Recipe:</title>
 </head>
@@ -63,67 +76,60 @@
             <li id="saved"><a data-toggle="tab" href="/savedRecipes">Saved Recipes</a></li>
             <li id="edit"><a data-toggle="tab" href="/editUser/@Model.RegisterUser.UserId">Edit Profile</a></li>
             <li id="logout"><a data-toggle="tab" href="/logout">Log Out</a></li>
-            <li style = "float: right;">
-                <form class="navbar-form navbar-right" action="/action_page.php">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Search Recipes</button>
-                </form>
-            </li>
         </ul>
     </nav> 
 
-    <div class="container">
-        
-        <h1>@Model.RegisterUser.FirstName, Edit Your Recipe:</h1>
-
-        <h1 class="RecipeTitle">@Model.Recipe.RecipeName</h1>
-
-        <img class="RecipePicture" src="@Model.Recipe.RecipeImage">
- 
-        <h3>Time needed for Recipe: @Model.Recipe.RecipeDuration minutes</h3>
-
-        <h3>Number of Ingredients: @Model.Recipe.IngredientList.Count()</h3>
+    <div class="containerCenter">
 
         <div class="LEFTside">
-            <h3>Add an Ingredient:</h3>
-                <form asp-controller="Home" asp-action="AddIngredient" method="POST">
-                    <input type="hidden" asp-for="@Model.Ingredient.RecipeId" value="@Model.Recipe.RecipeId"/>
-                    <div class="form-group row">
-                        <span asp-validation-for="@Model.Ingredient.IngredientName"></span>
-                        <label asp-for="@Model.Ingredient.IngredientName"></label>
-                        <input asp-for="@Model.Ingredient.IngredientName"/>
-                    </div>
-                    <div class="form-group row">
-                        <span asp-validation-for="@Model.Ingredient.Quantity"></span>
-                        <label asp-for="@Model.Ingredient.Quantity"></label>
-                        <input asp-for="@Model.Ingredient.Quantity"/>
+            
+            <h1>@Model.RegisterUser.FirstName, Edit Your Recipe:</h1>
 
-                        <label asp-for="@Model.Ingredient.Metric"></label>
-                        <select asp-for="@Model.Ingredient.Metric">
-                            <option>Teasepoon</option>
-                            <option>Tablespoon</option>
-                            <option>Cup</option>
-                            <option>Pint</option>
-                            <option>Quart</option>
-                            <option>Gallon</option>
-                        </select>
-                    </div>
-                    <div class="form-group row">
-                        <input type="submit" value="Add an Ingredient to your Recipe!"/>
-                    </div>
-                </form>
+            <h1 class="RecipeTitle">@Model.Recipe.RecipeName</h1>
+
+            <img class="RecipePicture" src="@Model.Recipe.RecipeImage">
+    
+            <h3>Time needed for Recipe: @Model.Recipe.RecipeDuration minutes</h3>
+
+            <h3>Number of Ingredients: @Model.Recipe.IngredientList.Count()</h3>
+
+            <h3>Add an Ingredient:</h3>
+            <form asp-controller="Home" asp-action="AddIngredient" method="POST">
+                <input type="hidden" asp-for="@Model.Ingredient.RecipeId" value="@Model.Recipe.RecipeId"/>
+                <div class="form-group row">
+                    <span asp-validation-for="@Model.Ingredient.IngredientName"></span>
+                    <label asp-for="@Model.Ingredient.IngredientName"></label>
+                    <input asp-for="@Model.Ingredient.IngredientName"/>
+                </div>
+                <div class="form-group row">
+                    <span asp-validation-for="@Model.Ingredient.Quantity"></span>
+                    <label asp-for="@Model.Ingredient.Quantity"></label>
+                    <input asp-for="@Model.Ingredient.Quantity"/>
+
+                    <label asp-for="@Model.Ingredient.Metric"></label>
+                    <select asp-for="@Model.Ingredient.Metric">
+                        <option>Teasepoon</option>
+                        <option>Tablespoon</option>
+                        <option>Cup</option>
+                        <option>Pint</option>
+                        <option>Quart</option>
+                        <option>Gallon</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <input type="submit" value="Add an Ingredient to your Recipe!"/>
+                </div>
+            </form>
             <h3>Add a Step:</h3>
-                <form asp-controller="Home" asp-action="AddStep" method="POST">
-                    <div class="form-group row">
-                        <input type="hidden" asp-for="@Model.Step.RecipeId" value="@Model.Recipe.RecipeId"/>
-                        <span asp-validation-for="@Model.Step.Text"></span>
-                        <label asp-for="@Model.Step.Text"></label>
-                        <textarea asp-for="@Model.Step.Text"></textarea>
-                        <input type="submit" value="Add a Step to Your Recipe!"/>
-                    </div>        
-                </form>
+            <form asp-controller="Home" asp-action="AddStep" method="POST">
+                <div class="form-group row">
+                    <input type="hidden" asp-for="@Model.Step.RecipeId" value="@Model.Recipe.RecipeId"/>
+                    <span asp-validation-for="@Model.Step.Text"></span>
+                    <label asp-for="@Model.Step.Text"></label>
+                    <textarea asp-for="@Model.Step.Text"></textarea>
+                    <input type="submit" value="Add a Step to Your Recipe!"/>
+                </div>        
+            </form>
         </div>
 
         <div class="Notebookpaper">

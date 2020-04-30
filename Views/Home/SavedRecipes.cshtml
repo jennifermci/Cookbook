@@ -5,8 +5,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <title>Favorites</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">   
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+       $(document).ready(function() {
+
+           
+
+            $( ".gallery" ).hover(function() {
+                    var id = $(this).attr('id');
+                    console.log("this is the id:", id)
+                    $( this ).css("opacity",".7");
+                    $( this ).append( $( "<button onclick=\"location.href='/details/"+id+"'\" type=\"button\" class=\"clipboard\"><svg class=\"bi bi-file-text\" width=\"2em\" height=\"2em\" viewBox=\"0 0 16 16\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\"><path fill-rule=\"evenodd\" d=\"M4 1h8a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V3a2 2 0 012-2zm0 1a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1H4z\" clip-rule=\"evenodd\"/><path fill-rule=\"evenodd\" d=\"M4.5 10.5A.5.5 0 015 10h3a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-2A.5.5 0 015 8h6a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-2A.5.5 0 015 6h6a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-2A.5.5 0 015 4h6a.5.5 0 010 1H5a.5.5 0 01-.5-.5z\" clip-rule=\"evenodd\"/></svg>" ) );
+                    }, function() {
+                    $( this ).find( "button" ).remove();
+                    $( this ).css("opacity","1");
+                }
+            );
+        });
+
+    </script>
+    <style>
+
+        .clipboard {
+            padding-top: 5px;
+            background-color: lightsteelblue;
+            border-radius: 12px;
+            position: absolute;
+            top:270px; 
+            left:5px;
+            opacity: 1;
+        }
+        .gallery{
+            width: 320px;
+            height: 320px;
+            display: inline-block;
+            margin: 15px;
+            position:relative;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .gallery img {
+            width: 320px;
+            height: 320px; 
+            text-align: center;
+            position:relative;
+
+            border-radius: 10px;
+        }
+        .container{
+            text-align: center;
+        }
+        .sideBanner{
+            height: 100%;
+            width: 160px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left:0;
+            overflow-y: hidden;
+            overflow-x: hidden;
+            @* background-color: yellow; *@
+            padding-top: 20px;
+        }
+        .sideBanner img{
+            width: 300px;
+            height: 100%;
+            margin-left: -75px;
+        }
+        .sideBannerRight{
+            height: 100%;
+            width: 160px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right:0;
+            overflow-y: hidden;
+            overflow-x: hidden;
+            padding-top: 20px;
+
+        }
+        .sideBannerRight img{
+            width: 300px;
+            height: 100%;
+            margin-left: -75px;
+        }
+    </style>
     <title>Sucess</title>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -22,17 +109,27 @@
     </nav>  
 
 
+    <div class="sideBanner">
+        <img src="https://pngriver.com/wp-content/uploads/2018/03/Download-Wooden-Spoon-PNG-Image-For-Designing-Purpose.png" alt="sideBanner">
+    </div>
+    <div class="sideBannerRight">
+        <img src="https://pngriver.com/wp-content/uploads/2018/03/Download-Wooden-Spoon-PNG-Image-For-Designing-Purpose.png" alt="sideBanner">
+    </div>
+
     <div class="container">
-        <h1>Welcome @Model.FirstName:</h1>
-        <h2>Your Favorite Recipes:</h2>
+        <h1>@Model.FirstName's Favorites:</h1>
+        <h4>@Model.Favorites.Count saved recipes</h4>
+
         @foreach (var favorite in @Model.Favorites)
         {
-            <div id = "@favorite.RecipeId">
+            <div class="gallery" id = "@favorite.RecipeId">
 
                 <img src="@favorite.Recipe.RecipeImage" alt="@favorite.Recipe.RecipeName" /> 
+                <p style="text-align: center">@favorite.Recipe.RecipeName</p>
 
             </div>
         }
+
     </div>  
     
 
