@@ -13,19 +13,23 @@
             margin-top: 100px;
             background-image: url("https://images2.minutemediacdn.com/image/upload/c_crop,h_1414,w_2101,x_10,y_0/v1564595422/shape/mentalfloss/94002-gettyimages-911458892.jpg?itok=S6EI56ji");
             background-repeat: no-repeat;
-            background-size: cover;
-            width: 1500px;
-            height: 1200px;
+            background-size: contain;
+            @* width: 1500px;
+            height: 1200px; *@
+            padding-bottom: 45px;
         }
+
         body, html {
             height: 100%;
             margin: 0;
             font-family: Courier, monospace;
             background-color: black;
+
         }
         .profile {
             margin-top: 300px;
-            margin-right: 150px;
+            margin-right: 100px;
+            margin-left: 20px;
             width: 480px;
             height: 240px;
             border: 2px black solid;
@@ -46,8 +50,9 @@
             margin-right: 70px;
         }
         .list {
-            margin-top: 100px;
-            margin-left: 150px;
+            margin-top: 50px;
+            margin-left: 50px;
+
             width: 480px;
             height: 700px;
             border: 2px black solid;
@@ -59,6 +64,7 @@
             display: inline-block;
             overflow: auto;
             box-shadow: 5px 5px 3px 5px #888888;
+            margin-bottom: 50px
         }
         img {
             width: 50px;
