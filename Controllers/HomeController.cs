@@ -462,11 +462,10 @@ namespace Cookbook.Controllers
                 mail.To.Add($"{fromLogin.Email}");
                 mail.Subject = $"Your Recipe for {Recipe.RecipeName}!";
                 mail.Body = "<h1>The Recipe You Requested:<h1>"+
-                "<br>"+
                 $"<h2>{Recipe.RecipeName}</h2>"+
                 "<br>"+
                 // $"<img style=\"width: 200px; height: 200px;\" src=\"{Recipe.RecipeImage}\"/>"+
-                $"<img style=\"width: 200px; height: 200px;\" src=\"https://www.thewholesomedish.com/wp-content/uploads/2018/07/Best-Lasagna-550-500x500.jpg\"/>"+
+                $"<img style=\"width: 200px; height: 200px;\" src=\"{Recipe.RecipeImage}\"/>"+
                 "<br>"+
                 $"<h5>This Recipe takes {Recipe.RecipeDuration} Minutes</h5>"+
                 "<br>"+
@@ -479,7 +478,7 @@ namespace Cookbook.Controllers
                 mail.IsBodyHtml = true;
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("TheRecipeYouRequested@gmail.com", "password@123!");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("TheRecipeYouRequested@gmail.com", "password");
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(mail);

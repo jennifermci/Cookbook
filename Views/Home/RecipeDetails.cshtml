@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Indie+Flower&family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <style>
         .tip {
@@ -89,7 +90,7 @@
         .messageboard {
             margin-top: 50px;
             margin-left: 50px;
-            border: 3px solid grey;
+            border: 3px solid black;
             border-radius: 20px;
             padding-left: 50px;
             padding-top: 25px;
@@ -99,13 +100,46 @@
 
         }
         .mainrecipe {
-            margin-top: 50px;
+            margin-top: 150px;
             margin-left: 50px;
+            display: inline-block;
+            text-align: center;
         }
         .forms {
             margin-top: 5px;
             margin-bottom: 5px;
             margin-left: 40px;
+        }
+
+        .Notebookpaper{
+            background-image: url("https://www.wpclipart.com/education/supplies/paper/notepad_page.png");
+            background-repeat: no-repeat;
+            border-radius: 10px;
+            background-size:100%;
+            padding-left: 115px;
+            padding-top: 100px;
+            width: 600px;
+            display: inline-block;
+            font-family: 'Indie Flower', cursive;
+            font-family: 'Satisfy', cursive;
+            font-family: 'Homemade Apple', cursive;
+            margin-top: 30px;
+            vertical-align: top;
+            margin-left: 20px;
+            height: 760px;
+            text-align: left;
+            overflow: auto;
+        }
+        .top {
+            border: 3px black solid;
+            padding: 0px 30px 30px 30px;
+            width: 1300px;
+            height: auto;
+            margin-top: 75px;
+            margin-left: 50px;
+            margin-right: 130px;
+            border-radius: 10px;
+        
         }
 
 
@@ -122,35 +156,44 @@
             <li id="logout"><a data-toggle="tab" href="/logout">Log Out</a></li>
         </ul>
     </nav>  
+
     <div class = "wrapper">  
-    
+    <div class="top">
         <div class="mainrecipe">
             <h1>@Model.Recipe.RecipeName</h1>
 
             <img class="detailsPic" src="@Model.Recipe.RecipeImage"/>
 
-        <h3>Time needed for Recipe: @Model.Recipe.RecipeDuration minutes</h3>
+            <h3>Time needed for Recipe: @Model.Recipe.RecipeDuration minutes</h3>
 
-        <h3>Number of Ingredients: @Model.Recipe.IngredientList.Count()</h3>
+            <h3>Number of Ingredients: @Model.Recipe.IngredientList.Count()</h3>
+        </div>  
 
+        <div class="Notebookpaper">
             <div>
-                <ul>
-                    @foreach(var ingredient in @Model.Recipe.IngredientList)
+                <h4>Ingredients:</h4>
+                    <ul>
+                    @foreach(var ingredient in Model.Recipe.IngredientList)
                     {
-                        <li>@ingredient.IngredientName</li>
+                        <li>@ingredient.IngredientName: @{
+                            var amount = ingredient.Quantity.ToString ("##0.00");
+                            @Html.DisplayTextFor(model =>amount);
+                        } - @ingredient.Metric
+                        </li>
                     }
-                </ul>
+                    </ul>
             </div>
-
             <div>
-                <ul>
-                    @foreach(var step in @Model.Recipe.StepList)
+                <h4>List of Instructions:</h4>
+                    <ol>
+                    @foreach(var step in Model.Recipe.StepList)
                     {
                         <li>@step.Text</li>
                     }
-                </ul>
+                    </ol>
             </div>
-        </div>  
+        </div>
+        </div>
        <div class="messageboard">
 
            <h3 style="color: black;"> Tips from the Community:</h3>
